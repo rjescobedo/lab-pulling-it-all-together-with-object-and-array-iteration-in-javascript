@@ -114,3 +114,135 @@ function gameObject() {
         },
     };
 }
+
+function numPointsScored(playerName) {
+    const game = gameObject();
+    console.log('Looking for ', playerName);
+    //console.log(game);
+    for(const gameKey in game){
+        const team = game[gameKey];
+        const players = team['players'];
+        //console.log(players);
+
+        for (const name in players) {
+            if(name === playerName) {
+                //console.log(typeof name);
+                const player = players[name];
+                return player.points;
+            }
+        }
+    }
+}
+
+
+function shoeSize(playerName) {
+    const game = gameObject();
+    console.log('Looking for ', playerName);
+    for(const gameKey in game){
+        const team = game[gameKey];
+        const players = team['players'];
+        //console.log(players);
+        
+        for (const name in players) {
+            if(name === playerName) {
+                //console.log(typeof name);
+                const player = players[name];
+                return player.shoe;
+            }
+        }
+    }
+}
+
+function teamColors(teamName) {
+    const game = gameObject();
+    console.log('Looking for ', teamName);
+    for(const gameKey in game){
+        const team = game[gameKey];
+        //console.log(team);
+        if(team.teamName === teamName) {
+            return team.colors;  
+        }
+
+    }
+}
+
+function teamNames() {
+    const game = gameObject();
+    const teamArray = [];
+    for(const gameKey in game) {
+        const team = game[gameKey];
+        const names = team.teamName;
+        teamArray.push(names);
+    }
+    return teamArray;
+}
+
+function playerNumbers(teamName) {
+    const game = gameObject();
+    const jerseyNum = [];
+    console.log(`Looking for: ${teamName}`);
+    for (const gameKey in game) {
+        const team = game[gameKey];
+        const players = team['players'];
+        
+        if (team.teamName === teamName) {
+            for (const player in players) {
+                const num = players[player];
+                const playerNumber = num.number;
+                jerseyNum.push(playerNumber);
+            }
+        }
+    }
+    return jerseyNum;
+}
+
+function playerStats(playerName) {
+    const game = gameObject();
+ 
+    for(const gameKey in game){
+        const team = game[gameKey];
+        const players = team['players'];
+        //console.log(players);
+        
+        for (const name in players) {
+            if(name === playerName) {
+                //console.log(typeof name);
+                const player = players[name];
+                return player;
+            }
+        }
+    }
+}
+
+function bigShoeRebounds() {
+    const game = gameObject();
+    let rebounds = 0;
+    let maxShoeSize = 0;
+
+    for (const gameKey in game) {
+        const teams = game[gameKey];
+        const players = teams['players'];
+        
+        for (const playerKey in players) {
+            const player = players[playerKey];
+            //console.log(player.shoe);
+        
+            if (player.shoe > maxShoeSize) {
+                maxShoeSize = player.shoe;
+                rebounds = player.rebounds;
+            }
+        }
+    }
+    return rebounds;
+}
+
+//numPointsScored("Brendan Hayword");
+//shoeSize('Ben Gordon');
+//teamColors('Brooklyn Nets');
+//teamNames();
+//playerNumbers('Brooklyn Nets');
+//playerStats('Ben Gordon');
+//bigShoeRebounds();
+
+
+

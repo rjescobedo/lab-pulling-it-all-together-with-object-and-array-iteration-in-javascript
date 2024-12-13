@@ -236,6 +236,90 @@ function bigShoeRebounds() {
     return rebounds;
 }
 
+function mostPointsScored() {
+    const game = gameObject();
+    let maxPoints = 0;
+    let topPlayer = null;
+
+    for (const gameKey in game) {
+        const teams = game[gameKey];
+        const players = teams['players'];
+        
+        for (const playerKey in players) {
+            const player = players[playerKey];
+            
+            if (player.points > maxPoints) {
+                maxPoints = player.points;
+                topPlayer = player;
+            }
+        }
+    }
+    return topPlayer;
+}
+
+function winningTeam() {
+    const game = gameObject();
+    //Help calculate the total points
+    function totalTeamPoints(players) {
+        return Object.values(players).reduce((total, player) => total + player.points, 0);
+    }
+
+    const homePoints = totalTeamPoints(game.home.players);
+    const awayPoints = totalTeamPoints(game.away.players);
+
+    if(homePoints > awayPoints) {
+        return `The winning team is ${game.home.teamName} with ${homePoints} points`;
+    } else {
+        return `The winning team is ${game.away.teamName} with ${awayPoints} points`;
+    }
+}
+
+function playerWithLongestName() {
+    const game = gameObject();
+
+    let longestName = '';
+    let longestNamePlayer = null;
+
+    function checkPlayers(players) {
+        for (const playerName in players) {
+            if (playerName.length > longestName.length) {
+                longestName = playerName;
+                longestNamePlayer = {
+                    name: playerName,
+                    steals: players[playerName].steals
+                };
+            }
+        }
+    }
+    checkPlayers(game.home.players);
+    checkPlayers(game.away.players);
+
+    //Nested function to check if the player with the longest name has the most steals
+    function doesLongNameStealATon() {
+        let maxSteals = 0;
+
+        function findMaxSteals(players) {
+            for (const playerName in players) {
+                if (players[playerName].steals > maxSteals) {
+                    maxSteals = players[playerName].steals;
+                }
+            }
+        }
+
+        findMaxSteals(game.home.players);
+        findMaxSteals(game.away.players);
+
+        return longestNamePlayer === maxSteals;
+    }
+    const stealsResponse = doesLongNameStealATon();
+    
+    console.log(`The player with the longest name is ${longestNamePlayer.name} and it is ${stealsResponse} that he has the most steals.`);
+    
+    return stealsResponse;
+}
+
+
+
 //numPointsScored("Brendan Hayword");
 //shoeSize('Ben Gordon');
 //teamColors('Brooklyn Nets');
@@ -243,6 +327,11 @@ function bigShoeRebounds() {
 //playerNumbers('Brooklyn Nets');
 //playerStats('Ben Gordon');
 //bigShoeRebounds();
+//mostPointsScored();
+//winningTeam();
+//playerWithLongestName();
+//playerWithLongestName();
+
 
 
 
